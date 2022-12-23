@@ -1,26 +1,29 @@
 import React, { Component } from 'react'
-import './Dice.css'
+import './Dice.css';
 
-class Dice extends Component {
+export default class Dice extends Component {
   state = {
-   data : null
+    randomNumber : null,
+    eventName : null
   }
- 
+  getNumber = (e) =>{
+    this.setState({
+      randomNumber : Math.floor(Math.random()*(7-1)+1),
+      eventName : e.key
+    }) 
+  }
   componentDidMount(){
-    fetch('https://acb-api.algoritmika.org/api/transaction')
-    .then(response => response.json())
-    .then(data => {
-      this.setState({ data : data})
-    });
+    window.addEventListener('keypress', this.getNumber)
   }
 
   render() {
-
+    if(this.state.eventName === " "){
+      document.querySelector('.dice').innerHTML = this.state.randomNumber
+    }
     return (
-      <div>{
-        document.write(this.state.data)
-        }</div>
+      <div className='dice'>
+        
+      </div>
     )
   }
 }
-export default Dice
